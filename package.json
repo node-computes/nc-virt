@@ -1,0 +1,22 @@
+{
+  "name": "nc-virt",
+  "version": "1.0.0",
+  "description": "Node Computes Virtualisation Module",
+  "main": "virt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-computes/nc-virt.git"
+  },
+  "author": "Thibaut Lapierre",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/node-computes/nc-virt/issues"
+  },
+  "homepage": "https://github.com/node-computes/nc-virt#readme",
+  "dependencies": {
+        "libvirt": "~1.1.1"
+    }
+}
