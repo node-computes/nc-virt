@@ -1,48 +1,17 @@
 
 var libvirt = require('libvirt'),
     Hypervisor = libvirt.Hypervisor,
-    h = require('./helpers/helper');
+    h = require('../helpers/helper');
 
 h.getLibVirtVersion().then(function(version) {
     //console.log('LibVirt Version: ' + version);
 });
 
+
 var connection = new Hypervisor('qemu:///system');
 connection.connect(function() {
 
-    connection.getHostname(function(err, result) {
-        //console.log('Hostname: ' + result);
-    });
-    connection.getCapabilities(function(err, result) {
-        //console.log(result);
-    });
-
-    connection.lookupDomainById(24, function(err, domain) {
-        //console.log(domain);
-    });
-
-    connection.getSysInfo(function(err, result) {
-        //console.log('SysInfo: ' + result);
-    });
-
-/*    connection.vm_list = connection.getAllDomains().then(function () {
-            var self = this;
-            return Promise.join([ this.listDefinedDomainsAsync(), this.listActiveDomainsAsync()
-                ])
-                .spread(function(defined, active) { return defined.concat(active); })
-                .spread(function(defined, active) {
-                    return Promise.all([
-                        Promise.map(defined, function(domain) { return self.lookupDomainByNameAsync(domain); }),
-                        Promise.map(active, function(domain) { return self.lookupDomainByIdAsync(domain); })
-                    ]);
-                })
-                .spread(function(defined, active) { return defined.concat(active); });
-        }
-    );
-*/
-/*
-    [
-        //{ name: 'capabilities', method: 'getCapabilities' },
+var hypervisor = [
         { name: 'host name', method: 'getHostname' },
         { name: 'type', method: 'getType' },
         { name: 'connection uri', method: 'getConnectionUri' },
@@ -51,13 +20,17 @@ connection.connect(function() {
         { name: 'connection secure', method: 'isConnectionSecure' },
         { name: 'connection encrypted', method: 'isConnectionEncrypted' },
         { name: 'connection alive', method: 'isConnectionAlive'},
-        //{ name: 'system info', method: 'getSysInfo'},
-    ].forEach(function(attribute) {
+        { name: 'capabilities', method: 'getCapabilities' },
+        { name: 'system info', method: 'getSysInfo'},
+    ]
+  
+var hypervisor_get = function(hypervisor) {
             connection[attribute.method](function(err, result) {
                 console.log(result);
+                hypervisor.map(hypervisor_get);
             });
-    });
-*/
+    };
+
 
 /*
     [
