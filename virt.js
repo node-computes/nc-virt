@@ -25,22 +25,22 @@ connection.connect(function() {
         //console.log('SysInfo: ' + result);
     });
 
-//    connection.vm_list = connection.getAllDomains().then(function () {
-//            var self = this;
-//            return Promise.join([ this.listDefinedDomainsAsync(), this.listActiveDomainsAsync()
-//                ])
-//                .spread(function(defined, active) { return defined.concat(active); })
-//                .spread(function(defined, active) {
-//                    return Promise.all([
-//                        Promise.map(defined, function(domain) { return self.lookupDomainByNameAsync(domain); }),
-//                        Promise.map(active, function(domain) { return self.lookupDomainByIdAsync(domain); })
-//                    ]);
-//                })
-//                .spread(function(defined, active) { return defined.concat(active); });
-//        }
-//    );
-//    console.log('VM List: ' + connection.vm_list);
-
+/*    connection.vm_list = connection.getAllDomains().then(function () {
+            var self = this;
+            return Promise.join([ this.listDefinedDomainsAsync(), this.listActiveDomainsAsync()
+                ])
+                .spread(function(defined, active) { return defined.concat(active); })
+                .spread(function(defined, active) {
+                    return Promise.all([
+                        Promise.map(defined, function(domain) { return self.lookupDomainByNameAsync(domain); }),
+                        Promise.map(active, function(domain) { return self.lookupDomainByIdAsync(domain); })
+                    ]);
+                })
+                .spread(function(defined, active) { return defined.concat(active); });
+        }
+    );
+*/
+/*
     [
         //{ name: 'capabilities', method: 'getCapabilities' },
         { name: 'host name', method: 'getHostname' },
@@ -57,13 +57,13 @@ connection.connect(function() {
                 console.log(result);
             });
     });
+*/
 
-
-
+/*
     [
         {
-            name: 'defined but inactive domains',
-            method: 'listDefinedDomains', expected: []
+            name: 'Active domains',
+            method: 'listActiveDomains', expected: []
         },
         {
             name: 'defined but inactive networks',
@@ -101,8 +101,58 @@ connection.connect(function() {
 
     ].forEach(function(testCase) {
             connection[testCase.method](function(err, result) {
-               console.log(testCase, result)
+               console.log(testCase.name, result)
             });
+    });
+*/
+    connection.listActiveDomains(function(err, result) {
+        result.forEach(function(activedomain) {
+            connection.lookupDomainById(activedomain, function(err, domain) {
+
+                [
+                    {
+                        name: 'Instance Name',
+                        method: 'getName'
+                    },
+                    {
+                        name: 'Instance UUID',
+                        method: 'getUUID'
+                    },
+                    {
+                        name: 'Instance Operating System Type',
+                        method: 'getOSType'
+                    },
+                    {
+                        name: 'Instance Maximum Memory',
+                        method: 'getMaxMemory'
+                    },
+                    {
+                        name: 'Instance Maximum Vcpus',
+                        method: 'getMaxVcpus'
+                    },
+                    {
+                        name: 'Instance Memory',
+                        method: 'getMemory'
+                    },
+                    {
+                        name: 'Instance Vcpus',
+                        method: 'getVcpus'
+                    },
+                    {
+                        name: 'Instance State',
+                        method: 'isActive'
+                    }
+                ].forEach(function(property) {
+                    if (domain[property.method] == undefined) {
+                        console.log('Undefined property ' + property.name)
+                    } else {
+                        domain[property.method](function(err, result) {
+                            console.log(property.name, result)
+                        });
+                    }
+                });
+            });
+        });
     });
 
 
@@ -110,3 +160,38 @@ connection.connect(function() {
 });
 
 connection.disconnect();
+
+var Connection = (function () {
+    return {
+        connect: function () {
+            //quemu connection here or any other
+        }
+    }
+})();
+
+
+
+var VirtualMachine = (function () {
+    var conn = Connection.connect();
+
+    return {
+
+        list: function () {
+            console.log('list of vms')
+        },
+
+        get: function (vm_id) {
+            console.log('single vm')
+        },
+
+        create: function () {
+            console.log('create vm')
+        },
+
+        delete: function (vm_id) {
+            console.log('lol')
+        }
+    }
+})();
+
+VirtualMachine.list();
