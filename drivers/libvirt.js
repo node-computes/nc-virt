@@ -109,7 +109,7 @@ connection.connect(function() {
         result.forEach(function(activedomain) {
             connection.lookupDomainById(activedomain, function(err, domain) {
 
-                [
+                [ //### Instance
                     {
                         name: 'Instance Name',
                         method: 'getName'
@@ -132,7 +132,7 @@ connection.connect(function() {
                     },
                     {
                         name: 'Instance Memory',
-                        method: 'getMemory'
+                        method: 'getMemoryStats'
                     },
                     {
                         name: 'Instance Vcpus',
