@@ -3,7 +3,7 @@ var libvirt = require('libvirt'),
     Hypervisor = libvirt.Hypervisor,
     h = require('../helpers/helper');
 
-h.getLibVirtVersion().then(function(version));
+h.getLibVirtVersion().then(function(version){});
 
 var libvirt_socket = new Hypervisor('qemu:///system');
 
@@ -18,7 +18,7 @@ var hypervisor_info = [
     { name: 'connection_alive', method: 'isConnectionAlive' },
     { name: 'capabilities', method: 'getCapabilities' },
     { name: 'system_info', method: 'getSysInfo' },
-]
+];
 
 var nc_objects = [
     { name: 'active_domains', method: 'listActiveDomains' },
@@ -30,7 +30,7 @@ var nc_objects = [
     { name: 'active_storage_pools', method: 'listActiveStoragePools' },
     { name: 'network_filters', method: 'listNetworkFilters' },
     { name: 'defined_secrets_uuids', method: 'listSecrets' },
-]
+];
 
 var instance_info = [
     { name: 'get_name', method: 'getName' },
@@ -41,7 +41,7 @@ var instance_info = [
     { name: 'get_memory', method: 'getMemoryStats' },
     { name: 'get_vcpus', method: 'getVcpus' },
     { name: 'get_state', method: 'isActive' },
-]
+];
 
 var instance_actions = [
     { name: 'destroy', method: 'destroy' },
@@ -52,7 +52,7 @@ var instance_actions = [
     { name: 'resume', method: 'resume' },
     { name: 'suspend', method: 'suspend' },
     { name: 'save', method: 'save' },
-]
+];
 
 var get_hypervisor_infos = function(hypervisor_info) {
         conn[hypervisor_info.method](function(err, result) {
@@ -62,16 +62,16 @@ var get_hypervisor_infos = function(hypervisor_info) {
 
 var get_active_domains_name = function(active_domains) {
   conn
-}
+};
 
 var get_nc_objects = function(nc_objects) {
-        conn[nc_objects.method](function(err, result) {
+        libvirt_socket[nc_objects.method](function(err, result) {
             console.log(result);
         });
 };
 
 var get_instance_info = function(instance_info) {
-        conn[instance_info.method](function(err, result) {
+        libvirt_socket[instance_info.method](function(err, result) {
             if (domain[property.method] == undefined) {
                 console.log('Undefined property ' + property.name)
             } else {
@@ -83,76 +83,63 @@ var get_instance_info = function(instance_info) {
 };
 
 var set_instance_action = function(instance_action) {
-    connection[attribute.method](function(err, result) {
+    libvirt_socket[attribute.method](function(err, result) {
         console.log(result);
     });
 };
 
-connection.connect(function() {
-    var hypervisorInfo = hypervisor_info.map(get_hypervisor);
-    var iDActiveDomains = nc_objects.map(get_nc_objects) {
-        connection.listActiveDomains(function(err, activedomain) {
-          connection.lookupDomainById(activedomain, function(err, domain);
-        };
-      )};
-    var instanceInfo = iDActiveDomains.map(get_instance_info)
-    //var instanceInfo = iDActiveDomains.map(set_instance_info)
-    };
-});
-
-connection.disconnect();
-
-var Connection = (function () {
-    return {
-        connect: function () {
-            libvirt_socket.connect();
-        },
-        disconnect: function () {
-            libvirt_socket.disconnect();
-        }
-    }
-})();
-
-var conn = Connection.connect();
 
 var hypervisor = (function () {
     return {
         hostname: function () {
-            conn.getHostname(function(err, hostname) {
-                console.log(hostname);
-                return hostname;
-            )};
+            libvirt_socket.connect(function() {
+                libvirt_socket.getHostname(function(err, hostname) {
+                    console.log(hostname);
+                    return hostname;
+                });
+            });
         },
         type: function () {
-            conn.getType(function(err, type) {
-                console.log(type);
-                return type;
-            )};
+            libvirt_socket.connect(function() {
+                libvirt_socket.getType(function(err, type) {
+                    console.log(type);
+                    return type;
+                });
+            });
         },
         capabilities: function () {
-            conn.getCapabilities(function(err, capabilities) {
-                console.log(capabilities);
-                return capabilities;
-            )};
+            libvirt_socket.connect(function() {
+                libvirt_socket.getCapabilities(function(err, capabilities) {
+                        console.log(capabilities);
+                        return capabilities;
+                    });
+            });
         },
         system_info: function () {
-            conn.getSysInfo(function(err, sysinfo) {
-                console.log(sysinfo);
-                return sysinfo;
-            )};
+            libvirt_socket.connect(function() {
+                libvirt_socket.getSysInfo(function(err, sysinfo) {
+                    console.log(sysinfo);
+                    return sysinfo;
+                });
+            });
         },
 
         version: function () {
-            cconn.getVersion(function(err, version) {
-                console.log(version);
-                return version;
-            )};
+            libvirt_socket.connect(function() {
+                libvirt_socket.getVersion(function(err, version) {
+                    console.log(version);
+                    return version;
+                });
+            });
         },
         libvirt_version: function () {
-            conn.getLibVirtVersion(function(err, version) {
-                console.log(version);
-                return version;
-            )};
+            libvirt_socket.connect(function() {
+
+                libvirt_socket.getLibVirtVersion(function(err, version) {
+                    console.log(version);
+                    return version;
+                });
+            });
         }
     }
 })();
@@ -161,14 +148,20 @@ var instance = (function () {
     return {
 
         list: function () {
-            var listIdActiveDomains = conn.listActiveDomains(function(err, activedomain) {
-              connection.lookupDomainById(activedomain, function(err, domain);
-            };
-            var listNameActiveDomains = listIdActiveDomains.map()
-            console.log('list of vms')
+            libvirt_socket.connect(function() {
+                var listIdActiveDomains = 'none';
+
+                libvirt_socket.listActiveDomains(function (err, activedomain) {
+                    console.log(activedomain);
+                });
+                libvirt_socket.lookupDomainById(30, function (err, domain) {
+                });
+            });
+            //var listNameActiveDomains = listIdActiveDomains.map();
+            //console.log('list of vms')
         },
 
-        show: function (vm_id) {
+        show: function () {
             var instanceInfo = iDActiveDomains.map(get_instance_info);
             return get_instance_info
             console.log(get_instance_info)
@@ -188,4 +181,9 @@ var instance = (function () {
 
 
 hypervisor.hostname();
+//hypervisor.type();
+//hypervisor.capabilities();
+//hypervisor.system_info();
+//hypervisor.version();
+//hypervisor.libvirt_version();
 instance.list();
