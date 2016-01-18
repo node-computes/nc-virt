@@ -92,12 +92,14 @@ var set_instance_action = function(instance_action) {
 var hypervisor = (function () {
     return {
         hostname: function () {
-            libvirt_socket.connect(function() {
+            var result = libvirt_socket.connect(function() {
                 libvirt_socket.getHostname(function(err, hostname) {
                     console.log(hostname);
                     return hostname;
                 });
             });
+            console.log(result);
+            return result;
         },
         type: function () {
             libvirt_socket.connect(function() {
@@ -134,7 +136,6 @@ var hypervisor = (function () {
         },
         libvirt_version: function () {
             libvirt_socket.connect(function() {
-
                 libvirt_socket.getLibVirtVersion(function(err, version) {
                     console.log(version);
                     return version;
@@ -180,10 +181,12 @@ var instance = (function () {
 })();
 
 
-hypervisor.hostname();
-//hypervisor.type();
+var hy = hypervisor.hostname();
+console.log(hy);
+
+hypervisor.type();
 //hypervisor.capabilities();
 //hypervisor.system_info();
-//hypervisor.version();
-//hypervisor.libvirt_version();
+hypervisor.version();
+hypervisor.libvirt_version();
 instance.list();
