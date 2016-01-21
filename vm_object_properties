@@ -1,15 +1,3 @@
-var hypervisor_info = [
-    { name: 'hostname', method: 'getHostname' },
-    { name: 'type', method: 'getType' },
-    { name: 'connection_uri', method: 'getConnectionUri' },
-    { name: 'libvirt_version', method: 'getLibVirtVersion' },
-    { name: 'version', method: 'getVersion' },
-    { name: 'connection_secure', method: 'isConnectionSecure' },
-    { name: 'connection_encrypted', method: 'isConnectionEncrypted' },
-    { name: 'connection_alive', method: 'isConnectionAlive' },
-    { name: 'capabilities', method: 'getCapabilities' },
-    { name: 'system_info', method: 'getSysInfo' },
-];
 
 var nc_objects = [
     { name: 'active_domains', method: 'listActiveDomains' },

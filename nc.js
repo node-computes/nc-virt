@@ -11,17 +11,22 @@ var api = express();
 api.use(bodyParser.urlencoded({ extended: true }));
 api.use(bodyParser.json());
 
-//Router
-//Get a list of all books
+function getAllMethods(object) {
+    return Object.getOwnPropertyNames(object).filter(function(property) {
+        return typeof object[property] == 'function';
+    });
+}
 
-api.get( '/api/libvirt/hypervisor/hostname', function( request, response ) {
-    libvirt_driver.connect(function () {
-        libvirt_driver.getHypervisor('getHostname', function (res) {
+var Hypervisor = libvirt_driver.hypervisor_get(),
+    hypervisor_get_methods = getAllMethods(Hypervisor);
+
+hypervisor_get_methods.map(function (method) {
+    api.get( '/api/libvirt/hypervisor/' + method, function( request, response ) {
+        Hypervisor[method](function (res) {
             response.send(res);
-        })
+        });
     });
 });
-
 
 
 /*
