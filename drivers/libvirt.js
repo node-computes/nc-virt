@@ -11,15 +11,24 @@ function connect(callback) {
     });
 }
 
-function getHypervisor (get_info, action_callback) {
-    libvirt_socket[get_info](function (err, result) {
-        action_callback(result);
-    });
-}
+
 
 function display (result) {
     console.log(result + '\n')
 }
+
+module.exports = {
+    connect: function (callback) {
+        libvirt_socket.connect(function() {
+            callback();
+        });
+    },
+    getHypervisor: function  (get_info, action_callback) {
+        libvirt_socket[get_info](function (err, result) {
+            action_callback(result);
+        });
+    }
+};
 
 var hypervisor = (function () {
     return {
@@ -33,7 +42,7 @@ var hypervisor = (function () {
         type: function () {
             connect(function () {
                 getHypervisor('getType', function (res) {
-                    display(res)
+                    console.log(res);
                 })
             });
         },
@@ -131,11 +140,13 @@ var instance = (function () {
     }
 })();
 
-hypervisor.hostname();
+//hypervisor.hostname(function (res) {
+//    console.log(res);
+//});
 
 
 
-hypervisor.type();
+//hypervisor.type();
 //hypervisor.capabilities();
 //hypervisor.system_info();
 //hypervisor.version();

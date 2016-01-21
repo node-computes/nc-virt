@@ -1,5 +1,5 @@
 // Module dependencies.
-var libvirt_driver  = require('./drivers/libvirt.js');
+var libvirt_driver  = require('./drivers/libvirt');
 
 var express         = require('express'),
     path            = require('path'),
@@ -14,13 +14,16 @@ api.use(bodyParser.json());
 //Router
 //Get a list of all books
 
-api.get( '/api/libvirt/hypervisor_hostname', function( request, response ) {
+api.get( '/api/libvirt/hypervisor/hostname', function( request, response ) {
     libvirt_driver.connect(function () {
         libvirt_driver.getHypervisor('getHostname', function (res) {
             response.send(res);
         })
     });
 });
+
+
+
 /*
 //Insert a new book
 api.post( '/api/books', function( request, response ) {
