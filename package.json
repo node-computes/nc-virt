@@ -19,6 +19,7 @@
   "dependencies": {
         "libvirt": "~1.1.1",
         "body-parser": "~1.13.2",
-        "express": "~4.13.1"
+        "express": "~4.13.1",
+        "xml2js": "~0.4.16"
     }
 }
