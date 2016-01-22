@@ -80,26 +80,69 @@ module.exports = {
 
     instance_get: function () {
         return {
-
-            list: function () {
-
+            list: function (action_callback) {
+                connect(function () {
+                    libvirt_socket.listActiveDomains(function (err, activedomains) {
+                        activedomains.map(
+                            function (activedomain) {
+                                libvirt_socket.lookupDomainById(activedomain, function (err, domain) {
+                                    domain.getUUID(function (err, uuid) {
+                                        console.log(uuid);
+                                        domain.getName(function (err, name) {
+                                            console.log(name);
+                                            domain.getInfo(function (err, info) {
+                                                console.log(info);
+                                                action_callback(domain);
+                                            });
+                                        });
+                                    });
+                                });
+                            }
+                        )
+                    });
+                })
             },
 
             show: function () {
-
+                libvirt_socket[instance_info.method](function(err, result) {
+                    if (domain[property.method] == undefined) {
+                        console.log('Undefined property ' + property.name)
+                    } else {
+                        domain[property.method](function(err, result) {
+                            console.log(property.name, result)
+                        });
+                    }
+                });
             }
         }
     },
 
     instance_set: function () {
         return {
-            start: function () {
-                console.log('create vm')
-            },
-
             destroy: function (vm_id) {
                 console.log('lol')
-            }
+            },
+            start: function (vm_id) {
+                console.log('lol')
+            },
+            reboot: function (vm_id) {
+                console.log('lol')
+            },
+            shutdown: function (vm_id) {
+                console.log('lol')
+            },
+            reset: function (vm_id) {
+                console.log('lol')
+            },
+            resume: function (vm_id) {
+                console.log('lol')
+            },
+            suspend: function (vm_id) {
+                console.log('lol')
+            },
+            save: function (vm_id) {
+                console.log('lol')
+            },
         }
     }
 };

@@ -18,11 +18,22 @@ function getAllMethods(object) {
 }
 
 var Hypervisor = libvirt_driver.hypervisor_get(),
-    hypervisor_get_methods = getAllMethods(Hypervisor);
+    hypervisor_list_methods = getAllMethods(Hypervisor);
 
-hypervisor_get_methods.map(function (method) {
+hypervisor_list_methods.map(function (method) {
     api.get( '/api/libvirt/hypervisor/' + method, function( request, response ) {
         Hypervisor[method](function (res) {
+            response.send(res);
+        });
+    });
+});
+
+var Instance = libvirt_driver.instance_get(),
+    instance_list_methods = getAllMethods(Instance);
+
+instance_list_methods.map(function (method) {
+    api.get( '/api/libvirt/instance/' + method, function( request, response ) {
+        Instance[method](function (res) {
             response.send(res);
         });
     });
