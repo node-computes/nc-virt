@@ -87,12 +87,10 @@ module.exports = {
                             function (activedomain) {
                                 libvirt_socket.lookupDomainById(activedomain, function (err, domain) {
                                     domain.getUUID(function (err, uuid) {
-                                        console.log(uuid);
                                         domain.getName(function (err, name) {
-                                            console.log(name);
-                                            domain.getInfo(function (err, info) {
-                                                console.log(info);
-                                                action_callback(domain);
+                                            domain.getInfo(function (err, info, name, uuid, domain) {
+                                                console.log(info + name + uuid + domain);
+                                                action_callback(info + name + uuid + domain);
                                             });
                                         });
                                     });

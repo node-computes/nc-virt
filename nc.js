@@ -1,11 +1,12 @@
 // Module dependencies.
+
 var libvirt_driver  = require('./drivers/libvirt');
 
 var express         = require('express'),
     path            = require('path'),
     bodyParser      = require('body-parser');
 
-//Create server
+//Create API server
 var api = express();
 
 api.use(bodyParser.urlencoded({ extended: true }));
@@ -17,9 +18,11 @@ function getAllMethods(object) {
     });
 }
 
+// List all the methods (get) from the Hypervisor object
 var Hypervisor = libvirt_driver.hypervisor_get(),
     hypervisor_list_methods = getAllMethods(Hypervisor);
 
+// Create an API call for every methods
 hypervisor_list_methods.map(function (method) {
     api.get( '/api/libvirt/hypervisor/' + method, function( request, response ) {
         Hypervisor[method](function (res) {
@@ -28,6 +31,7 @@ hypervisor_list_methods.map(function (method) {
     });
 });
 
+// List all the methods (get) from the Instance object
 var Instance = libvirt_driver.instance_get(),
     instance_list_methods = getAllMethods(Instance);
 
