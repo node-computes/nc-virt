@@ -35,6 +35,7 @@ hypervisor_list_methods.map(function (method) {
 var Instance = libvirt_driver.instance_get(),
     instance_list_methods = getAllMethods(Instance);
 
+/*
 instance_list_methods.map(function (method) {
     api.get( '/api/libvirt/instance/' + method, function( request, response ) {
         Instance[method](function (res) {
@@ -42,7 +43,19 @@ instance_list_methods.map(function (method) {
         });
     });
 });
+*/
 
+api.get( '/api/libvirt/instance/list', function( request, response ) {
+    Instance.list(function (res) {
+        response.send(res);
+    });
+});
+
+api.get( '/api/libvirt/instance/:id', function( request, response ) {
+    Instance.info(request.params.id, function (res) {
+        response.send(res);
+    });
+});
 
 /*
 //Insert a new book

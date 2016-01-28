@@ -1,6 +1,6 @@
 
 var libvirt = require('libvirt'),
-    Hypervisor = libvirt.Hypervisor;
+  Hypervisor = libvirt.Hypervisor;
 
 var libvirt_socket = new Hypervisor('qemu:///system');
 
@@ -83,33 +83,26 @@ module.exports = {
             list: function (action_callback) {
                 connect(function () {
                     libvirt_socket.listActiveDomains(function (err, activedomains) {
-                        activedomains.map(
-                            function (activedomain) {
-                                libvirt_socket.lookupDomainById(activedomain, function (err, domain) {
-                                    domain.getUUID(function (err, uuid) {
-                                        domain.getName(function (err, name) {
-                                            domain.getInfo(function (err, info, name, uuid, domain) {
-                                                console.log(info + name + uuid + domain);
-                                                action_callback(info + name + uuid + domain);
-                                            });
-                                        });
-                                    });
-                                });
-                            }
-                        )
+                        action_callback(activedomains);
                     });
                 })
             },
 
-            show: function () {
-                libvirt_socket[instance_info.method](function(err, result) {
-                    if (domain[property.method] == undefined) {
-                        console.log('Undefined property ' + property.name)
-                    } else {
-                        domain[property.method](function(err, result) {
-                            console.log(property.name, result)
+            info: function (activedomain, action_callback) {
+                libvirt_socket.lookupDomainById(activedomain, function (err, domain) {
+                    domain.getUUID(function (err, uuid) {
+                        domain.getName(function (err, name) {
+                            domain.getInfo(function (err, info) {
+                                var res = {
+                                    'name': name,
+                                    'uuid': uuid,
+                                    'info':  info,
+                                    'domain_id': activedomain
+                                };
+                                action_callback(res);
+                            });
                         });
-                    }
+                    });
                 });
             }
         }
