@@ -1,3 +1,38 @@
+
+var nc_objects = [
+    { name: 'active_domains', method: 'listActiveDomains' },
+    { name: 'defined_but_inactive_networks', method: 'listDefinedNetworks' },
+    { name: 'defined_but_inactive_storage_pools', method: 'listDefinedStoragePools' },
+    { name: 'defined_but_inactive_interfaces', method: 'listDefinedInterfaces' },
+    { name: 'active_physical_host_interfaces', method: 'listActiveInterfaces' },
+    { name: 'active_networks', method: 'listActiveNetworks' },
+    { name: 'active_storage_pools', method: 'listActiveStoragePools' },
+    { name: 'network_filters', method: 'listNetworkFilters' },
+    { name: 'defined_secrets_uuids', method: 'listSecrets' },
+];
+
+var instance_info = [
+    { name: 'get_name', method: 'getName' },
+    { name: 'get_uuid', method: 'getUUID' },
+    { name: 'get_operating_system_type', method: 'getOSType' },
+    { name: 'get_maximum_memory', method: 'getMaxMemory' },
+    { name: 'get_maximum_vcpus', method: 'getMaxVcpus' },
+    { name: 'get_memory', method: 'getMemoryStats' },
+    { name: 'get_vcpus', method: 'getVcpus' },
+    { name: 'get_state', method: 'isActive' },
+];
+
+var instance_actions = [
+    { name: 'destroy', method: 'destroy' },
+    { name: 'reboot', method: 'reboot' },
+    { name: 'shutdown', method: 'shutdown' },
+    { name: 'reset', method: 'reset' },
+    { name: 'start', method: 'start' },
+    { name: 'resume', method: 'resume' },
+    { name: 'suspend', method: 'suspend' },
+    { name: 'save', method: 'save' },
+];
+
 - _parent
 - destroy
 - start
@@ -82,3 +117,4 @@
 - pinVcpuAsync
 - getNameAsync
 - getInfoAsync
+
