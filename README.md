@@ -1,20 +1,30 @@
 # nc-virt
 Node Computes Visualization
 
-## Install Libvirt-dev requirement
-❯ apt install libvirt-dev
-OR
-❯ cp -r drivers/libvirt-dev/usr /
+## Install
 
-## Start LibVirt
-❯ systemctl start libvirtd
+### Install Libvirt-dev requirement
+```bash
+apt install libvirt-dev
+```
+Or
+```bash
+cp -r drivers/libvirt-dev/usr /
+```
 
-## Run nc-virt
-❯ node nc.js
+### Start LibVirt
+```bash
+systemctl start libvirtd
+```
 
+### Run nc-virt
+```bash
+node nc.js
+```
 ## API
 
-- Hypervisor
+### Hypervisor
+```bash
 ❯ http://host:4711/api/libvirt/hypervisor/info
 ❯ http://host:4711/api/libvirt/hypervisor/hostname
 ❯ http://host:4711/api/libvirt/hypervisor/type
@@ -22,12 +32,16 @@ OR
 ❯ http://host:4711/api/libvirt/hypervisor/system_info
 ❯ http://host:4711/api/libvirt/hypervisor/version
 ❯ http://host:4711/api/libvirt/hypervisor/libvirt_version
+```
 
-- Instances/Domains
+### Instances/Domains
+```bash
 ❯ http://host:4711/api/libvirt/instance/list
 ❯ http://host:4711/api/libvirt/instance/show
+```
 
--> ongoing
+### Ongoing
+```bash
 ❯ http://host:4711/api/libvirt/instance/destroy
 ❯ http://host:4711/api/libvirt/instance/start
 ❯ http://host:4711/api/libvirt/instance/reboot
@@ -36,3 +50,4 @@ OR
 ❯ http://host:4711/api/libvirt/instance/resume
 ❯ http://host:4711/api/libvirt/instance/suspend
 ❯ http://host:4711/api/libvirt/instance/save
+```
