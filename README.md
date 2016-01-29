@@ -1,5 +1,5 @@
 # nc-virt
-Node Computes Visualization
+Libvirt REST API for Node Compute
 
 ## Install
 
